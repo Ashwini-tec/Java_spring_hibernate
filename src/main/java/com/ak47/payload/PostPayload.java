@@ -1,11 +1,7 @@
 package com.ak47.payload;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotEmpty;
 
-import com.ak47.pojo.CategoryPojo;
-import com.ak47.pojo.UserPojo;
+import javax.validation.constraints.NotEmpty;
 
 public class PostPayload {
 

@@ -29,7 +29,10 @@ public class UserController {
 		/********** get list of all user *********/ 
 		@RequestMapping(method = RequestMethod.GET, value = "/user")
 		@ResponseBody
-		public  ResponseEntity<List<UserPojo>> getAllUser(@RequestParam Integer pageSize, @RequestParam Integer pageNumber) {
+		public  ResponseEntity<List<UserPojo>> getAllUser(
+				@RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize, 
+				@RequestParam(value = "pageNumber", defaultValue = "10", required = false) Integer pageNumber
+				) {
 			
 			System.out.println("In get all User");
 			List<UserPojo> _userData = this.userService.getAll(pageSize, pageNumber);

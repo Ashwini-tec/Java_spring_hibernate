@@ -1,7 +1,5 @@
 package com.ak47.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ak47.payload.PostPayload;
-import com.ak47.pojo.PostPojo;
+import com.ak47.payload.PostResponsePayload;
 import com.ak47.pojo.ResponseDataPojo;
 import com.ak47.services.PostServices;
 
@@ -37,13 +35,13 @@ public class PostController {
 	}
 	
 	@RequestMapping( method = RequestMethod.GET, value ="/userPost")
-	public ResponseEntity<List<PostPayload>> getAllPost(
+	public ResponseEntity<PostResponsePayload> getAllPost(
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
 			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
 			@RequestParam(value = "orderedBy", defaultValue = "id", required = false) String orderType,
 			@RequestParam(value = "sortDir", defaultValue = "acc", required = false) String sortDir
 			){
-		List<PostPayload> userPost = this.postService.getAllPost(pageSize, pageNumber, orderType, sortDir);
+		PostResponsePayload userPost = this.postService.getAllPost(pageSize, pageNumber, orderType, sortDir);
 		return new ResponseEntity<>(userPost, HttpStatus.OK);
 	}
 	

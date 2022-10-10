@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.ak47.exception.ResourceNotFoundException;
 import com.ak47.payload.PostPayload;
+import com.ak47.payload.PostResponsePayload;
 import com.ak47.pojo.CategoryPojo;
 import com.ak47.pojo.PostPojo;
 import com.ak47.pojo.UserPojo;
@@ -51,7 +52,7 @@ public class PostServiceIml implements PostServices {
 	}
 
 	@Override
-	public List<PostPayload> getAllPost(Integer pageSize, Integer pageNumber, String orderType, String sortDir) {
+	public PostResponsePayload getAllPost(Integer pageSize, Integer pageNumber, String orderType, String sortDir) {
 		Sort orderedBy= null;
 		if(sortDir.equalsIgnoreCase("acc")) {
 			orderedBy = Sort.by(orderType).ascending();
@@ -64,7 +65,16 @@ public class PostServiceIml implements PostServices {
 		Page<PostPojo> getPost = this.postModel.findAll(p);
 		List <PostPojo> getAllPost =  getPost.getContent();
 		List<PostPayload> collect = getAllPost.stream().map((post)-> this.modelmapper.map(post, PostPayload.class)).collect(Collectors.toList());
-		return collect;
+		
+		PostResponsePayload data = new PostResponsePayload();
+		data.setContent(collect);
+		data.setIsNext(getPost.isLast());
+		data.setPageNumber(getPost.getNumber());
+		data.setPageSize(getPost.getSize());
+		data.setTotalElement(getPost.getTotalElements());
+		data.setTotalPage(getPost.getTotalPages());
+		
+		return data;
 	}
 
 	@Override
