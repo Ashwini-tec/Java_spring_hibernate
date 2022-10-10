@@ -6,7 +6,7 @@ import java.util.List;
 public interface PostServices {
 
 	public PostPayload createPost(PostPayload post, Integer userId, Integer categoryId);
-	public List<PostPayload> getAllPost(Integer pageSize, Integer pageNumber);
+	public List<PostPayload> getAllPost(Integer pageSize, Integer pageNumber, String orderType,String sortDir);
 	public PostPayload postGetById(Long id);
 	public PostPayload updatePost(Integer id, PostPayload post);
 	public void deletePost(Integer id);

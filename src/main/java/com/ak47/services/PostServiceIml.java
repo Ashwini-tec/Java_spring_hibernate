@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ak47.exception.ResourceNotFoundException;
@@ -50,8 +51,16 @@ public class PostServiceIml implements PostServices {
 	}
 
 	@Override
-	public List<PostPayload> getAllPost(Integer pageSize, Integer pageNumber) {
-		Pageable p = PageRequest.of(pageNumber, pageSize);
+	public List<PostPayload> getAllPost(Integer pageSize, Integer pageNumber, String orderType, String sortDir) {
+		Sort orderedBy= null;
+		if(sortDir.equalsIgnoreCase("acc")) {
+			orderedBy = Sort.by(orderType).ascending();
+		}
+		if(sortDir.equalsIgnoreCase("dec")) {
+			orderedBy = Sort.by(orderType).descending();
+		}
+		
+		Pageable p = PageRequest.of(pageNumber, pageSize, orderedBy);
 		Page<PostPojo> getPost = this.postModel.findAll(p);
 		List <PostPojo> getAllPost =  getPost.getContent();
 		List<PostPayload> collect = getAllPost.stream().map((post)-> this.modelmapper.map(post, PostPayload.class)).collect(Collectors.toList());

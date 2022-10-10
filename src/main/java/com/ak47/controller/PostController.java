@@ -38,10 +38,12 @@ public class PostController {
 	
 	@RequestMapping( method = RequestMethod.GET, value ="/userPost")
 	public ResponseEntity<List<PostPayload>> getAllPost(
-			@RequestParam Integer pageSize,
-			@RequestParam Integer pageNumber
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			@RequestParam(value = "orderedBy", defaultValue = "id", required = false) String orderType,
+			@RequestParam(value = "sortDir", defaultValue = "acc", required = false) String sortDir
 			){
-		List<PostPayload> userPost = this.postService.getAllPost(pageSize, pageNumber);
+		List<PostPayload> userPost = this.postService.getAllPost(pageSize, pageNumber, orderType, sortDir);
 		return new ResponseEntity<>(userPost, HttpStatus.OK);
 	}
 	
