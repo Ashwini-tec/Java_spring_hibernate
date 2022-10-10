@@ -2,6 +2,9 @@ package com.ak47.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ak47.exception.ResourceAlreadyExistException;
@@ -18,8 +21,10 @@ public class UserServiceImpl implements UserServices {
 	@Override
 	public UserPojo createUser(UserPojo user) {
 		UserPojo data = this.userModel.findByEmail(user.getEmail());
-		if(!data.getEmail().isEmpty()) {
-			throw new ResourceAlreadyExistException("User", "email", user.getEmail());
+		if(data != null) {
+			if(!data.getEmail().isEmpty()) {
+				throw new ResourceAlreadyExistException("User", "email", user.getEmail());
+			}
 		}
 		UserPojo userData = this.userModel.save(user);
 		return userData;
@@ -48,9 +53,11 @@ public class UserServiceImpl implements UserServices {
 	}
 
 	@Override
-	public List<UserPojo> getAll() {
-		List<UserPojo> userData = this.userModel.findAll();
-		return userData;
+	public List<UserPojo> getAll(Integer pageSize, Integer pageNumber) {
+		Pageable p = PageRequest.of(pageNumber, pageSize);
+		Page<UserPojo> userData = this.userModel.findAll(p);
+		List<UserPojo> allUser = userData.getContent();
+		return allUser;
 	}
 
 	@Override

@@ -8,6 +8,6 @@ public interface UserServices {
 	UserPojo createUser(UserPojo user);
 	UserPojo updateUser(UserPojo user, Integer id);
 	UserPojo getById(Integer user);
-	List<UserPojo> getAll();
+	List<UserPojo> getAll(Integer pageSize, Integer pagerNumber);
 	void deleteUser(Integer userId);
 }

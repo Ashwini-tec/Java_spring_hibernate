@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ak47.services.UserServices;
 import com.ak47.pojo.ResponseDataPojo;
@@ -28,10 +29,10 @@ public class UserController {
 		/********** get list of all user *********/ 
 		@RequestMapping(method = RequestMethod.GET, value = "/user")
 		@ResponseBody
-		public  ResponseEntity<List<UserPojo>> getAllUser() {
+		public  ResponseEntity<List<UserPojo>> getAllUser(@RequestParam Integer pageSize, @RequestParam Integer pageNumber) {
 			
 			System.out.println("In get all User");
-			List<UserPojo> _userData = this.userService.getAll();
+			List<UserPojo> _userData = this.userService.getAll(pageSize, pageNumber);
 			return new ResponseEntity<>(_userData,HttpStatus.CREATED);
 			
 		}
@@ -68,7 +69,7 @@ public class UserController {
 		@RequestMapping(method = RequestMethod.DELETE, value = "/user/{id}")
 		@ResponseBody
 		public ResponseEntity<ResponseDataPojo> deleteUser(@PathVariable Integer id) {
-			System.out.println("In get by id  User");
+			System.out.println("In delete  User");
 			this.userService.deleteUser(id);
 			return new ResponseEntity<ResponseDataPojo>(new ResponseDataPojo("user deleted Successfully", true), HttpStatus.OK);
 			

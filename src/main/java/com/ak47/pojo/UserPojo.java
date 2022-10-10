@@ -1,5 +1,8 @@
 package com.ak47.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -33,11 +36,28 @@ public class UserPojo {
 	@Column(name = "address")
 	private String address;
 	
+	@OneToMany(mappedBy = "user", cascade= CascadeType.ALL)
+	private List<PostPojo> post = new ArrayList<>();
 	
+
+	/**
+	 * @return the post
+	 */
+	public List<PostPojo> getPost() {
+		return post;
+	}
+
+	/**
+	 * @param post the post to set
+	 */
+	public void setPost(List<PostPojo> post) {
+		this.post = post;
+	}
+
 	@Override
 	public String toString() {
 		return "UserPojo [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", age=" + age
-				+ ", address=" + address + "]";
+				+ ", address=" + address + ", post=" + post + "]";
 	}
 
 	/**

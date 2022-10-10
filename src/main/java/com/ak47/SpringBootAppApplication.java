@@ -1,7 +1,9 @@
 package com.ak47;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SpringBootAppApplication {
@@ -12,4 +14,8 @@ public class SpringBootAppApplication {
 		System.out.println();
 	}
 
+	@Bean
+	public ModelMapper modelMappper() {
+		return new ModelMapper();
+	}
 }

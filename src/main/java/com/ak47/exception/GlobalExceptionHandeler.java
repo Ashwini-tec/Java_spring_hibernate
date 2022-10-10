@@ -9,6 +9,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.ak47.pojo.ResponseDataPojo;
 
@@ -39,11 +40,18 @@ public class GlobalExceptionHandeler {
 	}
 	
 	@ExceptionHandler(ResourceAlreadyExistException.class)
-	public ResponseEntity<ResponseDataPojo> responseNotFoundExceptionHandler(ResourceAlreadyExistException ex ){
+	public ResponseEntity<ResponseDataPojo> responseAreadyExistExceptionHandler(ResourceAlreadyExistException ex ){
 		String message = ex.getMessage();
 		ResponseDataPojo response = new ResponseDataPojo(message, false);
 		return new ResponseEntity<ResponseDataPojo>(response, HttpStatus.CONFLICT);
 		
 	}
-
+	
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ResponseDataPojo> responseMismatchExceptionHandler(MethodArgumentTypeMismatchException ex ){
+		String message = ex.getMessage();
+		ResponseDataPojo response = new ResponseDataPojo(message, false);
+		return new ResponseEntity<ResponseDataPojo>(response, HttpStatus.CONFLICT);
+		
+	}
 }
