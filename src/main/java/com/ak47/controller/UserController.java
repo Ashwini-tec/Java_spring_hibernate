@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ak47.services.UserServices;
+import com.ak47.payload.UserPayload;
 import com.ak47.pojo.ResponseDataPojo;
 import com.ak47.pojo.UserPojo;
 
@@ -29,13 +30,13 @@ public class UserController {
 		/********** get list of all user *********/ 
 		@RequestMapping(method = RequestMethod.GET, value = "/user")
 		@ResponseBody
-		public  ResponseEntity<List<UserPojo>> getAllUser(
-				@RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize, 
-				@RequestParam(value = "pageNumber", defaultValue = "10", required = false) Integer pageNumber
+		public  ResponseEntity<List<UserPayload>> getAllUser(
+				@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize, 
+				@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber
 				) {
 			
 			System.out.println("In get all User");
-			List<UserPojo> _userData = this.userService.getAll(pageSize, pageNumber);
+			List<UserPayload> _userData = this.userService.getAll(pageSize, pageNumber);
 			return new ResponseEntity<>(_userData,HttpStatus.CREATED);
 			
 		}
@@ -43,8 +44,8 @@ public class UserController {
 		/**************** create user **************/ 		
 		@RequestMapping(method = RequestMethod.POST, value = "/user")
 		@ResponseBody
-		public ResponseEntity<UserPojo> registerUser(@Valid @RequestBody UserPojo userData) {	
-				UserPojo _userData = this.userService.createUser(userData);
+		public ResponseEntity<UserPayload> registerUser(@Valid @RequestBody UserPojo userData) {	
+				UserPayload _userData = this.userService.createUser(userData);
 				System.out.println("In register User");
 				return new ResponseEntity<>(_userData,HttpStatus.CREATED);
 		}
@@ -52,18 +53,18 @@ public class UserController {
 		/****************** update user *************/ 		
 		@RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
 		@ResponseBody
-		public ResponseEntity<UserPojo>  UpdateUser(@Valid @RequestBody UserPojo userData, @PathVariable Integer id) {
+		public ResponseEntity<UserPayload>  UpdateUser(@Valid @RequestBody UserPojo userData, @PathVariable Integer id) {
 			System.out.println("In update User");
-			UserPojo _userData = this.userService.updateUser(userData, id);
+			UserPayload _userData = this.userService.updateUser(userData, id);
 			return new ResponseEntity<>(_userData,HttpStatus.CREATED);
 		}
 		
 		/******************* getById user *************/		
 		@RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
 		@ResponseBody
-		public ResponseEntity<UserPojo> getbyId(@PathVariable Integer id) {
+		public ResponseEntity<UserPayload> getbyId(@PathVariable Integer id) {
 			System.out.println("In get by id  User");
-			UserPojo _userData = this.userService.getById(id);
+			UserPayload _userData = this.userService.getById(id);
 			return new ResponseEntity<>(_userData, HttpStatus.OK);
 	
 		}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ak47.payload.CategoryPayload;
 import com.ak47.pojo.CategoryPojo;
 import com.ak47.pojo.ResponseDataPojo;
 import com.ak47.services.CategoryServices;
@@ -26,33 +27,33 @@ public class CategoryController {
 
 	//create category 	
 	@RequestMapping (method = RequestMethod.POST, value= "/category")
-	public ResponseEntity<CategoryPojo> createCategory(@RequestBody CategoryPojo category) {
+	public ResponseEntity<CategoryPayload> createCategory(@RequestBody CategoryPojo category) {
 		System.out.println("in create category");
-		CategoryPojo categ =  this.categoryService.createCategory(category);
+		CategoryPayload categ =  this.categoryService.createCategory(category);
 		return new ResponseEntity<>(categ, HttpStatus.CREATED);
 	}
 	
 	// get all category 
 	@RequestMapping(method = RequestMethod.GET, value= "/category")
-	public ResponseEntity<List<CategoryPojo>> getAllCategory(){
+	public ResponseEntity<List<CategoryPayload>> getAllCategory(){
 		System.out.println("in get all category");
-		List<CategoryPojo> categ = this.categoryService.getAll();
+		List<CategoryPayload> categ = this.categoryService.getAll();
 		return new ResponseEntity<>(categ, HttpStatus.OK);
 	}
 	
 	// category get by id
 	@RequestMapping( method= RequestMethod.GET, value="/category/{id}")
-	public ResponseEntity<CategoryPojo> getcategoryById(@PathVariable Integer id) {
+	public ResponseEntity<CategoryPayload> getcategoryById(@PathVariable Integer id) {
 		System.out.println("in get by id category");
-		CategoryPojo categ = this.categoryService.getById(id);
+		CategoryPayload categ = this.categoryService.getById(id);
 		return new ResponseEntity<>(categ, HttpStatus.OK);
 	}
 	
 	//update category 
 	@RequestMapping( method = RequestMethod.PUT, value = "/category/{id}")
-	public ResponseEntity<CategoryPojo> updateCategory(@Valid @RequestBody CategoryPojo category,@PathVariable Integer id){
+	public ResponseEntity<CategoryPayload> updateCategory(@Valid @RequestBody CategoryPojo category,@PathVariable Integer id){
 		System.out.println("in update category");
-		CategoryPojo ceteg = this.categoryService.updateCategory(id, category);
+		CategoryPayload ceteg = this.categoryService.updateCategory(id, category);
 		return new ResponseEntity<>( ceteg , HttpStatus.OK);
 	}
 	
